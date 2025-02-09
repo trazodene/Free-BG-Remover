@@ -8,7 +8,411 @@
           integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://github.com/trazodene/Free-BG-Remover/blob/main/style.css">
+<style>
+    :root {
+  --primary-color: #6c5ce7;
+  --secondary-color: #a29bfe;
+  --background-color: #f4f4f4;
+  --card-bg-color: #ffffff;
+  --button-color: #6c5ce7;
+  --button-hover-color: #5a4cc7;
+  --text-color: #333;
+  --icon-color: #888;
+  --history-bg-color: #f9f9f9;
+  --input-border-color: #ddd;
+  --input-border-hover-color: var(--primary-color);
+}
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter Variable", "Inter Placeholder", sans-serif;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 2rem;
+  background-color: #1a191b;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
 
+.container {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  border-radius: 15px;
+  background-color: #ffffff05;
+}
+
+/* Left Section Styles */
+.left-section {
+  padding: 30px 30px;
+  border-right: 1px solid #dddddd14;
+  width:30%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.left-section h2 {
+  font-size: 24px;
+  color: #ffffff;
+  margin-bottom: 20px;
+  text-align: left;
+  width: 100%;
+}
+
+/* Styled Upload Input */
+.upload-input {
+  display: block;
+  width: 100%;
+  padding: 20px;
+  border: 2px solid var(--input-border-color);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  background-color: #fafafa;
+  color: #555;
+  transition: 0.3s;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+}
+
+.upload-input::before {
+  content: 'Click or Drag to Upload';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #888;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.upload-input:hover {
+  border-color: var(--input-border-hover-color);
+  background-color: #f9f9f9;
+}
+
+.upload-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.upload-input[type="file"] {
+  display: none;
+}
+
+.upload-input-label {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+.upload-input-label:hover {
+  background-color: var(--button-hover-color);
+}
+
+.history-wrapper {
+  width: 100%;
+  height: auto;
+    min-height: 0;
+    max-height: 60%; 
+  height: auto;
+  margin-top: 20px;
+  padding: 25px;
+  background-color: #f9f9f905;
+  border-radius: 10px;
+  border: 1px solid #dddddd14;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: max-height 0.3s ease;
+}
+
+.history-container {
+  display: none;
+  align-items: center;
+gap: 10px;
+  height: 100%;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+.history-wrapper h3 {
+  font-size: 20px;
+  color: #ffffff;
+  text-align: left;
+  margin: 0;
+}
+
+
+.history-card {
+  flex-shrink: 0; /* Prevent card shrinking */
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  width: 100%;
+  padding: 12px 15px;
+  justify-content: space-between;
+  background-color: #ffffff0a;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.history-card img {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.history-card .file-name {
+  font-size: 14px;
+  color: #ffffff;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* Right Section Styles */
+.right-section {
+  border-radius: 12px;
+  padding: 30px;
+  height: 100%;
+  width: 60%;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.image-preview {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  max-width: 100%;
+  min-height: 80%;
+
+}
+
+.image-preview > img 
+{
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+  border: 1px solid #1a191b;
+}
+
+.action-buttons {display: flex;background: #ffffff05;border-radius: 10px;justify-content: space-between;/* gap: 20px; */width: 100%;/* padding: 25px; */}
+
+.action-buttons button {
+  background-color: transparent;
+  color: #fff;
+  font-size: 16px;
+  padding: 25px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  border-right: 1px solid #dddddd14;
+  transition: 0.3s;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+
+.action-buttons .icons i {
+  font-size: 20px;
+  color: var(--icon-color);
+}
+
+.action-buttons button i {
+  margin-right: 8px;
+}
+
+
+
+.custum-file-upload {
+  height: 200px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 20px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #dddddd14;
+  background-color: #212121;
+  border-radius: 10px;
+}
+
+.custum-file-upload .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custum-file-upload .icon svg {
+  height: 80px;
+  fill: #e8e8e8;
+}
+
+.custum-file-upload .text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custum-file-upload .text span {
+  font-weight: 400;
+  color: #e8e8e8;
+}
+
+.custum-file-upload input {
+  display: none;
+}
+
+#btn1:hover 
+{
+  background-color: #3333335a;
+  border-radius: 10px 0 0 10px;
+}
+
+
+#btn2:hover 
+{
+  background-color: #3333335a;
+  border-radius: 0;
+}
+
+#btn3:hover 
+{
+  background-color: #3333335a;
+  border-radius: 0 10px 10px 0;
+}
+.custum-file-upload:hover 
+{
+  background-color: #3333335a;
+}
+.history-card:hover 
+{
+  background-color: #3333335a;
+}
+
+
+.history-container::-webkit-scrollbar {
+  width: 12px;
+}
+
+.history-container::-webkit-scrollbar-track {
+  background: #ffffff1a;
+  border-radius: 10px;
+}
+
+.history-container::-webkit-scrollbar-thumb {
+  background: #ffffff1a;
+  border-radius: 10px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+.history-card .fa-trash {
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+.history-card img {
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.history-card .file-name {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  max-width: 90%;
+  max-height: 90%;
+  background: transparent;
+}
+
+.popup img {
+  max-width: 100%;
+  max-height: 100vh;
+  object-fit: contain;
+  border-radius: 10px;
+  border: 2px solid #dddddd14;
+}
+
+.popupoverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  cursor: pointer;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+}
+
+/* Blur Effect */
+.background-blur {
+  filter: blur(10px);
+  transition: filter 0.3s ease;
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  to {
+      transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+</style>
 </head>
 <body>
     <div class="container">
@@ -61,5 +465,228 @@
     </div>
 
     <script src="./script.js"></script>
+    
 </body>
+    <script>
+        // Function to update history container dimensions and scroll
+function updateHistoryContainer() {
+    const historyWrapper = document.querySelector('.history-wrapper');
+    const historyContainer = document.querySelector('.history-container');
+    const hasItems = historyContainer.children.length > 0;
+
+    // Ensure historyWrapper is visible when items exist
+    historyWrapper.style.display = hasItems ? "flex" : "none";
+
+    // Calculate available space dynamically
+    const leftSection = document.querySelector('.left-section');
+    const header = document.querySelector('.header');
+    const uploadArea = document.querySelector('.upload-area');
+
+    if (leftSection && header && uploadArea) {
+        const otherElementsHeight = header.offsetHeight + uploadArea.offsetHeight;
+        const maxAllowedHeight = (leftSection.offsetHeight - otherElementsHeight) * 0.6; // 60% of available space
+        historyWrapper.style.maxHeight = hasItems ? `${maxAllowedHeight}px` : '0';
+        historyContainer.style.overflowY = "auto"; // Enable scrolling inside history container
+    }
+
+    // Scrollbar spacing
+    const needsScroll = historyContainer.scrollHeight > historyContainer.clientHeight;
+    historyContainer.style.paddingRight = needsScroll ? '5px' : '0';
+}
+
+// Image Upload Handler
+function showImage(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const imgHistory = document.getElementById("historyContainer");
+        const newImageCard = document.createElement("div");
+        newImageCard.className = "history-card";
+        newImageCard.setAttribute("data-original", e.target.result);
+
+        // Card Content
+        newImageCard.innerHTML = `
+            <img src="${e.target.result}" alt="Uploaded Image" class="history-img">
+            <div class="file-name">${shortenFileName(file.name)}</div>
+            <i class="fa-solid fa-trash"></i>
+        `;
+
+        // Click to Show in Main View
+        newImageCard.addEventListener("click", () => {
+            document.getElementById("mainImage").src = newImageCard.querySelector("img").src;
+        });
+
+        // Delete Functionality
+        const trashIcon = newImageCard.querySelector(".fa-trash");
+        trashIcon.addEventListener("click", (e) => {
+            e.stopPropagation();
+            imgHistory.removeChild(newImageCard);
+
+            if (imgHistory.children.length === 0) {
+                document.getElementById("mainImage").src = "./trazodene.jpg";
+            }
+
+            updateHistoryContainer();
+        });
+
+        // Insert the new image at the top of history
+        imgHistory.prepend(newImageCard);
+
+        // Ensure history container is visible
+        imgHistory.style.display = "flex";
+
+        // Update container
+        updateHistoryContainer();
+
+        // Set initial main image if it's still the default
+        const mainImage = document.getElementById("mainImage");
+        if (mainImage.src.endsWith('701@2@b.jpg')) {
+            mainImage.src = e.target.result;
+        }
+    };
+    reader.readAsDataURL(file);
+}
+
+// Helper function to convert Data URL to Blob
+function dataURLtoBlob(dataURL) {
+    const arr = dataURL.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
+}
+
+// Background Removal Function
+async function removeBackground() {
+    const mainImage = document.getElementById("mainImage");
+    const activeCard = [...document.querySelectorAll('.history-card')].find(card => 
+        card.querySelector('img').src === mainImage.src
+    );
+
+    if (!activeCard) {
+        alert("No image available to process.");
+        return;
+    }
+
+    const originalSrc = activeCard.getAttribute("data-original");
+    if (!originalSrc) {
+        alert("Original image data missing.");
+        return;
+    }
+
+    // Show Loader
+    const loader = document.createElement("div");
+    loader.className = "loader";
+    activeCard.appendChild(loader);
+
+    try {
+        const formData = new FormData();
+        const blob = dataURLtoBlob(originalSrc);
+        formData.append("image_file", blob, "image.png");
+        formData.append("size", "auto");
+
+        const response = await fetch("https://api.remove.bg/v1.0/removebg", {
+            method: "POST",
+            headers: {
+                "X-Api-Key": "a31ZejMSxupdQyc3xQrGYJnK"
+            },
+            body: formData
+        });
+
+        if (!response.ok) throw new Error('API response error');
+
+        const resultBlob = await response.blob();
+        const newImageUrl = URL.createObjectURL(resultBlob);
+
+        // Update card image and main view
+        const cardImg = activeCard.querySelector("img");
+        cardImg.src = newImageUrl;
+        mainImage.src = newImageUrl;
+        activeCard.setAttribute("data-removed-bg", newImageUrl);
+
+    } catch (error) {
+        console.error("Error removing background:", error);
+        alert("Failed to remove background. Please try again.");
+    } finally {
+        loader.remove();
+    }
+}
+
+// Download the background-removed image
+function downloadImage() {
+    const mainImage = document.getElementById("mainImage");
+    const activeCard = [...document.querySelectorAll('.history-card')].find(card => 
+        card.querySelector('img').src === mainImage.src
+    );
+
+    if (!activeCard) {
+        alert("No image available to download.");
+        return;
+    }
+
+    const removedBgSrc = activeCard.getAttribute("data-removed-bg");
+    if (!removedBgSrc) {
+        alert("Please remove the background first before downloading.");
+        return;
+    }
+
+    fetch(removedBgSrc)
+        .then(res => res.blob())
+        .then(blob => {
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "image-removed-bg.png";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+        })
+        .catch(error => {
+            console.error("Download error:", error);
+            alert("Failed to download image.");
+        });
+}
+
+// Helper Functions
+function shortenFileName(name, maxLength = 20) {
+    return name.length > maxLength ? '*****' + name.slice(-maxLength) : name;
+}
+
+// Popup Controls
+document.addEventListener('DOMContentLoaded', () => {
+    const btn2 = document.getElementById('btn2');
+    const btn1 = document.getElementById('btn1');
+    const btn3 = document.getElementById('btn3');
+    const popup = document.querySelector('.popup');
+    const overlay = document.querySelector('.popupoverlay');
+    const container = document.querySelector('.container');
+
+    btn2.addEventListener('click', () => {
+        const imgSrc = document.getElementById('mainImage').src;
+        popup.innerHTML = `<img src="${imgSrc}" alt="Enlarged view">`;
+        popup.style.display = overlay.style.display = 'flex';
+        container.classList.add('background-blur');
+    });
+
+    overlay.addEventListener('click', () => {
+        popup.style.display = overlay.style.display = 'none';
+        container.classList.remove('background-blur');
+    });
+
+    btn1.addEventListener("click", removeBackground);
+    btn3.addEventListener("click", downloadImage);
+});
+
+// Window Resize Handler
+window.addEventListener('resize', updateHistoryContainer);
+
+// Initial Setup
+document.addEventListener('DOMContentLoaded', updateHistoryContainer);
+    </script>
 </html>
